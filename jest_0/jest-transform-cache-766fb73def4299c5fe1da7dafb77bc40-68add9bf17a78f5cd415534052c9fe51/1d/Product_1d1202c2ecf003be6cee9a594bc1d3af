@@ -1,0 +1,92 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/src/gem/t2-airtime-demo/src/action/topup/Product.jsx';var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _types = require('admin-on-rest/lib/rest/types');
+var _App = require('../../App');
+var _LinearProgress = require('material-ui/LinearProgress');var _LinearProgress2 = _interopRequireDefault(_LinearProgress);
+var _fetch = require('aor-jsonapi-client/build/fetch');
+var _ProductGrid = require('../../view/ProductGrid');var _ProductGrid2 = _interopRequireDefault(_ProductGrid);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+const initialState = {
+    products: [],
+    loading: true,
+    reservingId: false };
+
+
+const defaultParams = {
+    sort: {
+        field: 'id',
+        order: 'asc' },
+
+    pagination: {
+        page: 1,
+        perPage: 1000 } };
+
+
+
+class Product extends _react.Component {constructor(...args) {var _temp;return _temp = super(...args), this.
+
+        state = initialState, this.
+
+
+
+
+
+
+
+
+
+
+
+
+
+        selectTopup = product => {
+            this.setState({ reservingId: true });
+            (0, _fetch.jsonApiHttpClient)(`${_App.baseApiUrl}/reserve_id`).then(response => {
+                if (response.json.status === "ok") {
+                    this.setState({ reservingId: false });
+                    this.
+                    props.
+                    saveValues({
+                        reservedId: response.json.data.reserved_id,
+                        productInfo: Object.assign({},
+                        product) });
+
+
+                    this.
+                    props.
+                    nextStep();
+                } else {// We didn't get a transaction ID
+                    this.setState({ errorText: response.json.errors[0].detail, reservingId: false });
+                }
+            });
+        }, _temp;}componentWillMount() {const { msisdnInfo } = this.props;(0, _App.apiClient)(_types.GET_LIST, 'products', Object.assign({}, defaultParams, { filter: { operator_id: msisdnInfo.operatorId } })).then(response => {this.setState({ products: response.data, loading: false });});}
+
+    render() {
+
+        const { products, loading, reservingId } = this.state;
+
+        const { productInfo } = this.props;
+
+        const dataProducts = products.reduce((prev, record) => {
+            prev[record.id] = record;
+            return prev;
+        }, {});
+
+        // TODO DISABLE PRODUCTS IF INSUFFICIENT FUNDS
+        return loading || reservingId ?
+        _react2.default.createElement(_LinearProgress2.default, { mode: 'indeterminate', __source: { fileName: _jsxFileName, lineNumber: 76 }, __self: this }) :
+        _react2.default.createElement('span', { __source: { fileName: _jsxFileName, lineNumber: 77 }, __self: this },
+            _react2.default.createElement(_ProductGrid2.default, {
+                ids: products.map(product => product.id),
+                data: dataProducts,
+                showLocalPrice: false,
+                showRetailPrice: true,
+                showWholesalePrice: false,
+                showTopupAction: true,
+                topupCallback: this.selectTopup,
+                productSelectedId: productInfo.id,
+                isLoading: reservingId, __source: { fileName: _jsxFileName, lineNumber: 78 }, __self: this }));
+
+    }}exports.default =
+
+
+Product;

@@ -1,0 +1,203 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/src/gem/t2-airtime-demo/src/action/topup/Review.jsx';var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _SelectField = require('material-ui/SelectField');var _SelectField2 = _interopRequireDefault(_SelectField);
+var _MenuItem = require('material-ui/MenuItem');var _MenuItem2 = _interopRequireDefault(_MenuItem);
+var _AutoComplete = require('material-ui/AutoComplete');var _AutoComplete2 = _interopRequireDefault(_AutoComplete);
+var _TextField = require('material-ui/TextField');var _TextField2 = _interopRequireDefault(_TextField);
+var _RaisedButton = require('material-ui/RaisedButton');var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+var _FlatButton = require('material-ui/FlatButton');var _FlatButton2 = _interopRequireDefault(_FlatButton);
+var _Card = require('material-ui/Card');
+var _Toggle = require('material-ui/Toggle');var _Toggle2 = _interopRequireDefault(_Toggle);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+const styles = {
+    toggle: {
+        maxWidth: 250,
+        marginBottom: 16 } };
+
+
+
+const initialState = {
+    callingCode: null,
+    optionalInfo: false };
+
+
+class Review extends _react.Component {constructor(...args) {var _temp;return _temp = super(...args), this.
+
+        state = initialState, _temp;}
+
+    render() {
+
+        const { callingCode, optionalInfo } = this.state;
+
+        const {
+            availableCountries,
+            saveValues,
+            topupMethod,
+            senderNumber,
+            sendSms,
+            smsMessage,
+            cid1,
+            cid2,
+            cid3,
+            nextStep,
+            prevStep } =
+        this.props;
+
+        const topupMethods = [_react2.default.createElement(_MenuItem2.default, { key:
+            1,
+
+            value:
+            "topup",
+
+            primaryText: 'Topup', __source: { fileName: _jsxFileName, lineNumber: 45 }, __self: this }), _react2.default.createElement(_MenuItem2.default, { key:
+            2,
+
+            value:
+            "simulation",
+
+            primaryText: 'Simulation', __source: { fileName: _jsxFileName, lineNumber: 51 }, __self: this })];
+
+
+        return (
+            _react2.default.createElement('span', { __source: { fileName: _jsxFileName, lineNumber: 61 }, __self: this },
+                _react2.default.createElement(_Card.CardText, { __source: { fileName: _jsxFileName, lineNumber: 62 }, __self: this },
+                    _react2.default.createElement(_SelectField2.default, {
+                            value: topupMethod,
+                            onChange: (event, key, payload) => {
+                                saveValues({ topupMethod: payload });
+                            },
+                            floatingLabelText: 'Topup Method',
+                            floatingLabelFixed: true,
+                            hintText: 'Choose a Topup Method..', __source: { fileName: _jsxFileName, lineNumber: 63 }, __self: this },
+                        topupMethods),
+
+                    _react2.default.createElement('br', { __source: { fileName: _jsxFileName, lineNumber: 73 }, __self: this }),
+                    _react2.default.createElement(_AutoComplete2.default, {
+                        onNewRequest: (chosenRequest, index) => {
+                            this.setState({ callingCode: chosenRequest.value });
+                        },
+                        dataSource: availableCountries.map(item => {
+                            return {
+                                value: parseInt(item.callingCode, 10),
+                                text: item.name };
+
+                        }),
+                        floatingLabelText: 'Sender Number Country',
+                        hintText: 'Start typing to select a Country..', __source: { fileName: _jsxFileName, lineNumber: 74 }, __self: this }),
+                    _react2.default.createElement('span', {
+                            style: {
+                                display: callingCode ?
+                                'block' :
+                                'none' }, __source: { fileName: _jsxFileName, lineNumber: 86 }, __self: this },
+
+                        _react2.default.createElement(_TextField2.default, { floatingLabelText: 'Calling Code', value: `+${callingCode}`, disabled: true, __source: { fileName: _jsxFileName, lineNumber: 92 }, __self: this }),
+                        _react2.default.createElement('br', { __source: { fileName: _jsxFileName, lineNumber: 93 }, __self: this }),
+                        _react2.default.createElement(_TextField2.default, {
+                            hintText: 'Enter Sender Number..',
+                            floatingLabelText: 'Sender Number',
+                            value: senderNumber,
+                            onChange: (event, newValue) => {
+                                saveValues({ senderNumber: newValue, itzSenderNumber: `+${callingCode}${newValue}` });
+                            }, __source: { fileName: _jsxFileName, lineNumber: 94 }, __self: this }))),
+
+
+                _react2.default.createElement(_Card.CardText, { __source: { fileName: _jsxFileName, lineNumber: 103 }, __self: this },
+                    _react2.default.createElement(_Toggle2.default, {
+                        style: styles.toggle,
+                        label: 'Send confirmation SMS',
+                        defaultToggled: sendSms,
+                        onToggle: (event, isInputChecked) => {
+                            saveValues({ sendSms: isInputChecked });
+                        }, __source: { fileName: _jsxFileName, lineNumber: 104 }, __self: this }),
+                    _react2.default.createElement('span', {
+                            style: {
+                                display: sendSms ?
+                                'block' :
+                                'none' }, __source: { fileName: _jsxFileName, lineNumber: 111 }, __self: this },
+
+
+                        _react2.default.createElement('br', { __source: { fileName: _jsxFileName, lineNumber: 118 }, __self: this }),
+                        _react2.default.createElement(_TextField2.default, {
+                            hintText: 'Enter SMS message..',
+                            floatingLabelText: 'SMS Message',
+                            floatingLabelFixed: true,
+                            value: smsMessage,
+                            multiLine: true,
+                            onChange: (event, newValue) => {
+                                saveValues({ smsMessage: newValue });
+                            }, __source: { fileName: _jsxFileName, lineNumber: 119 }, __self: this }))),
+
+
+                _react2.default.createElement(_Card.CardText, { __source: { fileName: _jsxFileName, lineNumber: 130 }, __self: this },
+                    _react2.default.createElement(_Toggle2.default, {
+                        style: styles.toggle,
+                        label: 'Record optional information',
+                        defaultToggled: optionalInfo,
+                        onToggle: (event, isInputChecked) => {
+                            this.setState({ optionalInfo: isInputChecked });
+                        }, __source: { fileName: _jsxFileName, lineNumber: 131 }, __self: this }),
+                    _react2.default.createElement('span', {
+                            style: {
+                                display: optionalInfo ?
+                                'block' :
+                                'none' }, __source: { fileName: _jsxFileName, lineNumber: 138 }, __self: this },
+
+                        _react2.default.createElement(_TextField2.default, {
+                            hintText: 'Enter optional info 1..',
+                            floatingLabelText: 'Optional info 1',
+                            floatingLabelFixed: true,
+                            value: cid1,
+                            fullWidth: true,
+                            onChange: (event, newValue) => {
+                                saveValues({ cid1: newValue });
+                            }, __source: { fileName: _jsxFileName, lineNumber: 144 }, __self: this }),
+                        _react2.default.createElement('br', { __source: { fileName: _jsxFileName, lineNumber: 153 }, __self: this }),
+                        _react2.default.createElement(_TextField2.default, {
+                            hintText: 'Enter optional info 2..',
+                            floatingLabelText: 'Optional info 2',
+                            floatingLabelFixed: true,
+                            value: cid2,
+                            fullWidth: true,
+                            onChange: (event, newValue) => {
+                                saveValues({ cid2: newValue });
+                            }, __source: { fileName: _jsxFileName, lineNumber: 154 }, __self: this }),
+                        _react2.default.createElement('br', { __source: { fileName: _jsxFileName, lineNumber: 163 }, __self: this }),
+                        _react2.default.createElement(_TextField2.default, {
+                            hintText: 'Enter optional info 3..',
+                            floatingLabelText: 'Optional info 3',
+                            floatingLabelFixed: true,
+                            value: cid3,
+                            fullWidth: true,
+                            onChange: (event, newValue) => {
+                                saveValues({ cid3: newValue });
+                            }, __source: { fileName: _jsxFileName, lineNumber: 164 }, __self: this }))),
+
+
+                _react2.default.createElement(_FlatButton2.default, {
+                    label: 'Back',
+                    onClick: prevStep,
+                    style: {
+                        marginRight: 12 }, __source: { fileName: _jsxFileName, lineNumber: 175 }, __self: this }),
+
+                _react2.default.createElement('span', {
+                        style: {
+                            marginTop: 12,
+                            display: senderNumber && senderNumber.length > 3 ?
+                            'inline' :
+                            'none' }, __source: { fileName: _jsxFileName, lineNumber: 181 }, __self: this },
+
+                    _react2.default.createElement(_RaisedButton2.default, {
+                        style: {
+                            marginTop: 12 },
+
+                        label: 'Next',
+                        primary: true,
+                        onClick: nextStep, __source: { fileName: _jsxFileName, lineNumber: 188 }, __self: this }))));
+
+
+
+
+    }}exports.default =
+
+
+
+Review;

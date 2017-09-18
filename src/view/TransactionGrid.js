@@ -1,10 +1,8 @@
 import React from 'react';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import {TextField as MuiTextField, DateField, ShowButton, ImageField, NumberField} from 'admin-on-rest';
-import {List, ListItem} from 'material-ui/List';
 import TextField from 'material-ui/TextField';
 import LinearProgress from 'material-ui/LinearProgress';
-import CheckBoxIcon from 'material-ui/svg-icons/action/shopping-cart';
 import {
     redA700,
     greenA700,

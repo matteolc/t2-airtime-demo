@@ -1,0 +1,160 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/src/gem/t2-airtime-demo/src/action/Topup.jsx';var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _Stepper = require('material-ui/Stepper');
+var _Card = require('material-ui/Card');
+var _fetch = require('aor-jsonapi-client/build/fetch');
+var _App = require('../App');
+var _mui = require('admin-on-rest/lib/mui');
+
+var _Destination = require('./topup/Destination');var _Destination2 = _interopRequireDefault(_Destination);
+var _Product = require('./topup/Product');var _Product2 = _interopRequireDefault(_Product);
+var _Review = require('./topup/Review');var _Review2 = _interopRequireDefault(_Review);
+var _Checkout = require('./topup/Checkout');var _Checkout2 = _interopRequireDefault(_Checkout);
+var _Result = require('./topup/Result');var _Result2 = _interopRequireDefault(_Result);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+const initialState = {
+    stepIndex: 0,
+    steps: 4,
+    title: 'Topup',
+    stepTitles: [
+    'Enter Destination', 'Choose Product', 'Review Options', 'Checkout'],
+
+    loading: false,
+    wizard: {
+        availableCountries: [],
+        msisdnInfo: {},
+        productInfo: {},
+        topupMethod: 'simulation',
+        sendSms: false } };
+
+
+
+const styles = {
+    content: {
+        margin: '0 16px' },
+
+    backButton: {
+        marginRight: 12 },
+
+    cardText: {
+        padding: 0 },
+
+    actions: {
+        position: 'relative',
+        paddingLeft: 16,
+        paddingTop: 32,
+        paddingBottom: 16 } };
+
+
+
+class Topup extends _react.Component {constructor(...args) {var _temp;return _temp = super(...args), this.
+
+        state = initialState, this.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        saveValues = values => {
+            this.setState({
+                wizard: Object.assign({},
+                this.state.wizard,
+                values) });
+
+
+        }, this.
+
+        handleRestart = () => this.setState(initialState), this.
+
+        handleFinish = () => {
+            this.setState({ loading: true });
+            const { wizard } = this.state;
+            const params = {
+                msisdn: wizard.itzSenderNumber,
+                destination_number: wizard.itzDestinationNumber,
+                product: wizard.productInfo.id,
+                method: wizard.topupMethod,
+                reserved_id: wizard.reservedId,
+                send_sms: wizard.sendSms,
+                sms: wizard.smsMessage,
+                cid1: wizard.cid1,
+                cid2: wizard.cid2,
+                cid3: wizard.cid3 };
+
+            (0, _fetch.jsonApiHttpClient)(`${_App.baseApiUrl}/topup?${(0, _fetch.queryParameters)(params)}`, { method: 'POST' }).then(response => {
+                if (response.json.status === "ok") {
+                    this.setState({ result: response.json.data, loading: false });
+                    this.handleNext();
+                } else {// Something's gone wrong
+                    this.setState({ errorText: response.json.errors[0].detail, loading: false });
+                }
+            });
+        }, this.
+
+        handleNext = () => {
+            const { stepIndex, steps } = this.state;
+            this.setState({
+                stepIndex: stepIndex + 1,
+                finished: stepIndex >= steps - 1 });
+
+        }, this.
+
+        handlePrev = () => {
+            const { stepIndex } = this.state;
+            if (stepIndex > 0) {
+                this.setState({
+                    stepIndex: stepIndex - 1 });
+
+            }
+        }, _temp;}getStepContent(stepIndex) {const { loading, result, wizard } = this.state;switch (stepIndex) {case 0:return _react2.default.createElement(_Destination2.default, Object.assign({}, wizard, { saveValues: this.saveValues, nextStep: this.handleNext, __source: { fileName: _jsxFileName, lineNumber: 57 }, __self: this }));case 1:return _react2.default.createElement(_Product2.default, Object.assign({}, wizard, { saveValues: this.saveValues, nextStep: this.handleNext, __source: { fileName: _jsxFileName, lineNumber: 62 }, __self: this }));case 2:return _react2.default.createElement(_Review2.default, Object.assign({}, wizard, { saveValues: this.saveValues, nextStep: this.handleNext, prevStep: this.handlePrev, __source: { fileName: _jsxFileName, lineNumber: 64 }, __self: this }));case 3:return _react2.default.createElement(_Checkout2.default, Object.assign({}, wizard, { saveValues: this.saveValues, nextStep: this.handleFinish, loading: loading, __source: { fileName: _jsxFileName, lineNumber: 70 }, __self: this }));default:return _react2.default.createElement(_Result2.default, { record: result, nextStep: this.handleRestart, __source: { fileName: _jsxFileName, lineNumber: 76 }, __self: this });}}
+
+    render() {
+
+        const { stepIndex, steps, stepTitles, title } = this.state;
+
+        return (
+            _react2.default.createElement(_Card.Card, { __source: { fileName: _jsxFileName, lineNumber: 138 }, __self: this },
+                _react2.default.createElement(_mui.ViewTitle, { title: title, __source: { fileName: _jsxFileName, lineNumber: 139 }, __self: this }),
+                _react2.default.createElement(_Card.CardText, { style: styles.cardText, __source: { fileName: _jsxFileName, lineNumber: 140 }, __self: this },
+                    _react2.default.createElement(_Stepper.Stepper, { activeStep: stepIndex, __source: { fileName: _jsxFileName, lineNumber: 141 }, __self: this },
+                        [...Array(steps)].map((_, i) =>
+                        _react2.default.createElement(_Stepper.Step, { key: i, __source: { fileName: _jsxFileName, lineNumber: 143 }, __self: this },
+                            _react2.default.createElement(_Stepper.StepLabel, { __source: { fileName: _jsxFileName, lineNumber: 144 }, __self: this },
+                                stepTitles[i])))),
+
+
+
+
+                    _react2.default.createElement('div', { style: styles.content, __source: { fileName: _jsxFileName, lineNumber: 150 }, __self: this },
+                        this.getStepContent(stepIndex)))));
+
+
+
+
+    }}exports.default =
+
+
+
+Topup;

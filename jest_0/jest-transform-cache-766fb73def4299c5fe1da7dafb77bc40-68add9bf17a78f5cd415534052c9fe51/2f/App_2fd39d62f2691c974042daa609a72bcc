@@ -1,0 +1,34 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.apiClient = exports.baseApiUrl = undefined;var _jsxFileName = '/src/gem/t2-airtime-demo/src/App.js';var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _adminOnRest = require('admin-on-rest');
+var _restClient = require('aor-jsonapi-client/build/restClient');var _restClient2 = _interopRequireDefault(_restClient);
+var _countries = require('./resource/countries');
+var _transactions = require('./resource/transactions');
+var _operators = require('./resource/operators');
+var _Topup = require('./action/Topup');var _Topup2 = _interopRequireDefault(_Topup);
+var _theme = require('./theme');var _theme2 = _interopRequireDefault(_theme);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+const baseApiUrl = exports.baseApiUrl = `${process.env.REACT_APP_API_PROTOCOL}://${process.env.REACT_APP_API_ADDRESS}:${process.env.REACT_APP_API_PORT}`;
+const apiClient = exports.apiClient = (0, _restClient2.default)(baseApiUrl);
+
+const App = () =>
+_react2.default.createElement(_adminOnRest.Admin, {
+    title: 'Transfer-To Airtime API',
+    restClient: apiClient,
+    theme: _theme2.default,
+    dashboard: _Topup2.default, __source: { fileName: _jsxFileName, lineNumber: 14 }, __self: undefined },
+  _react2.default.createElement(_adminOnRest.Resource, {
+    name: 'countries',
+    list: _countries.CountryList,
+    show: _countries.CountryShow,
+    icon: _countries.CountryIcon, __source: { fileName: _jsxFileName, lineNumber: 19 }, __self: undefined }),
+  _react2.default.createElement(_adminOnRest.Resource, { name: 'operators', show: _operators.OperatorShow, __source: { fileName: _jsxFileName, lineNumber: 24 }, __self: undefined }),
+  _react2.default.createElement(_adminOnRest.Resource, { name: 'products', __source: { fileName: _jsxFileName, lineNumber: 25 }, __self: undefined }),
+  _react2.default.createElement(_adminOnRest.Resource, {
+    name: 'transactions',
+    list: _transactions.TransactionList,
+    show: _transactions.TransactionShow,
+    icon: _transactions.TransactionIcon, __source: { fileName: _jsxFileName, lineNumber: 26 }, __self: undefined }));exports.default =
+
+
+
+App;

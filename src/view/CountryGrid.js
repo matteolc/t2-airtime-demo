@@ -1,8 +1,6 @@
 import React from 'react';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardHeader} from 'material-ui/Card';
 import {TextField as MuiTextField, DateField, ShowButton} from 'admin-on-rest';
-import {List, ListItem} from 'material-ui/List';
-import TextField from 'material-ui/TextField';
 import Flag from "react-flags";
 import LinearProgress from 'material-ui/LinearProgress';
 

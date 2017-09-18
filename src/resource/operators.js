@@ -3,7 +3,6 @@ import {Show, SimpleShowLayout, ReferenceManyField} from 'admin-on-rest';
 import ProductGrid from '../view/ProductGrid';
 import FlatButton from 'material-ui/FlatButton';
 import NavigationRefresh from 'material-ui/svg-icons/navigation/refresh';
-import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import {CardActions} from 'material-ui/Card';
 
 const OperatorTitle = ({record}) => record

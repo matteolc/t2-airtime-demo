@@ -1,0 +1,167 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/src/gem/t2-airtime-demo/src/action/topup/Destination.jsx';var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _types = require('admin-on-rest/lib/rest/types');
+var _App = require('../../App');
+var _LinearProgress = require('material-ui/LinearProgress');var _LinearProgress2 = _interopRequireDefault(_LinearProgress);
+var _AutoComplete = require('material-ui/AutoComplete');var _AutoComplete2 = _interopRequireDefault(_AutoComplete);
+var _RaisedButton = require('material-ui/RaisedButton');var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+var _TextField = require('material-ui/TextField');var _TextField2 = _interopRequireDefault(_TextField);
+var _fetch = require('aor-jsonapi-client/build/fetch');
+
+var _colors = require('material-ui/styles/colors');function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+const initialState = {
+    callingCode: null,
+    destinationNumber: '',
+    loading: true,
+    errorText: null,
+    checkingDestination: false,
+    isDestinationNumberValid: false };
+
+
+const styles = {
+    errorStyle: {
+        color: _colors.red500 },
+
+    successStyle: {
+        color: _colors.green500 },
+
+    floatingLabelFocusStyle: {
+        color: _colors.blueGrey500 } };
+
+
+
+const defaultParams = {
+    sort: {
+        field: 'id',
+        order: 'asc' },
+
+    filter: {},
+    pagination: {
+        page: 1,
+        perPage: 1000 } };
+
+
+
+class Destination extends _react.Component {constructor(...args) {var _temp;return _temp = super(...args), this.
+
+        state = initialState, this.
+
+
+
+
+
+
+
+
+
+
+        checkDestination = () => {
+            this.setState({ checkingDestination: true });
+            const { callingCode, destinationNumber } = this.state;
+            const itzDestinationNumber = `+${callingCode}${destinationNumber}`;
+            const params = {
+                destination_number: itzDestinationNumber };
+
+            (0, _fetch.jsonApiHttpClient)(`${_App.baseApiUrl}/msisdn_info?${(0, _fetch.queryParameters)(params)}`).then(response => {
+                if (response.json.status === "ok") {
+                    this.setState({ errorText: "Destination available", isDestinationNumberValid: true, checkingDestination: false });
+                    this.
+                    props.
+                    saveValues({ itzDestinationNumber: itzDestinationNumber, msisdnInfo: response.json.data });
+                } else {// Something's not right with the destination number
+                    this.setState({ errorText: response.json.errors[0].detail, isDestinationNumberValid: false, checkingDestination: false });
+                }
+            });
+        }, _temp;}componentWillMount() {(0, _App.apiClient)(_types.GET_LIST, 'countries', defaultParams).then(response => {this.setState({ countries: response.data, loading: false });this.props.saveValues({ availableCountries: response.data });});}
+
+    render() {
+
+        const {
+            callingCode,
+            destinationNumber,
+            errorText,
+            checkingDestination,
+            isDestinationNumberValid,
+            loading } =
+        this.state;
+
+        const { msisdnInfo, availableCountries, nextStep } = this.props;
+
+        return loading ?
+        _react2.default.createElement(_LinearProgress2.default, { mode: 'indeterminate', __source: { fileName: _jsxFileName, lineNumber: 91 }, __self: this }) :
+        _react2.default.createElement('span', { __source: { fileName: _jsxFileName, lineNumber: 92 }, __self: this },
+            _react2.default.createElement(_AutoComplete2.default, {
+                onNewRequest: (chosenRequest, index) => {
+                    this.setState({ callingCode: chosenRequest.value });
+                },
+                dataSource: availableCountries.map(item => {
+                    return {
+                        value: parseInt(item.callingCode, 10),
+                        text: item.name };
+
+                }),
+                floatingLabelText: 'Destination Number Country',
+                hintText: 'Start typing to select a Country..', __source: { fileName: _jsxFileName, lineNumber: 93 }, __self: this }),
+            _react2.default.createElement('span', {
+                    style: {
+                        display: callingCode ?
+                        'block' :
+                        'none' }, __source: { fileName: _jsxFileName, lineNumber: 105 }, __self: this },
+
+                _react2.default.createElement(_TextField2.default, { floatingLabelText: 'Calling Code', value: `+${callingCode}`, disabled: true, __source: { fileName: _jsxFileName, lineNumber: 111 }, __self: this }),
+                _react2.default.createElement('br', { __source: { fileName: _jsxFileName, lineNumber: 112 }, __self: this }),
+                _react2.default.createElement(_TextField2.default, {
+                    floatingLabelText: 'Destination Number',
+                    value: destinationNumber,
+                    errorText: errorText,
+                    errorStyle: isDestinationNumberValid === true ?
+                    styles.successStyle :
+                    styles.errorStyle,
+                    floatingLabelFocusStyle: styles.floatingLabelFocusStyle,
+                    onChange: (event, newValue) => {
+                        this.setState({ errorText: null, destinationNumber: newValue });
+                    }, __source: { fileName: _jsxFileName, lineNumber: 113 }, __self: this })),
+
+            _react2.default.createElement('span', {
+                    style: {
+                        marginTop: 12,
+                        display: destinationNumber.length < 4 ?
+                        'none' :
+                        'block' }, __source: { fileName: _jsxFileName, lineNumber: 125 }, __self: this },
+
+                _react2.default.createElement(_RaisedButton2.default, {
+                    label: checkingDestination === true ?
+                    "Checking.." :
+                    "Check Destination",
+                    backgroundColor: _colors.amber500,
+                    disabled: checkingDestination,
+                    onClick: this.checkDestination, __source: { fileName: _jsxFileName, lineNumber: 132 }, __self: this })),
+
+            _react2.default.createElement('span', {
+                    style: {
+                        marginTop: 12,
+                        display: isDestinationNumberValid ?
+                        'block' :
+                        'none' }, __source: { fileName: _jsxFileName, lineNumber: 140 }, __self: this },
+
+                _react2.default.createElement(_TextField2.default, {
+                    floatingLabelText: 'Chosen Number',
+                    value: `+${msisdnInfo.msisdn}`,
+                    disabled: true, __source: { fileName: _jsxFileName, lineNumber: 147 }, __self: this }),
+                _react2.default.createElement('br', { __source: { fileName: _jsxFileName, lineNumber: 151 }, __self: this }),
+                _react2.default.createElement(_TextField2.default, { floatingLabelText: 'Operator', value: msisdnInfo.operator, disabled: true, __source: { fileName: _jsxFileName, lineNumber: 152 }, __self: this }),
+                _react2.default.createElement('br', { __source: { fileName: _jsxFileName, lineNumber: 153 }, __self: this }),
+                _react2.default.createElement(_RaisedButton2.default, {
+                    style: {
+                        marginTop: 12 },
+
+                    label: 'Next',
+                    primary: true,
+                    onClick: nextStep, __source: { fileName: _jsxFileName, lineNumber: 154 }, __self: this })));
+
+
+    }}exports.default =
+
+
+
+Destination;

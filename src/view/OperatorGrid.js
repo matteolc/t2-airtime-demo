@@ -1,7 +1,6 @@
 import React from 'react';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardHeader} from 'material-ui/Card';
 import {TextField as MuiTextField, DateField, ShowButton, ImageField} from 'admin-on-rest';
-import TextField from 'material-ui/TextField';
 
 const styles = {
     root: {

@@ -1,8 +1,6 @@
 import React from 'react';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardHeader} from 'material-ui/Card';
 import {TextField as MuiTextField, DateField, ImageField, NumberField} from 'admin-on-rest';
-import TextField from 'material-ui/TextField';
-import {List, ListItem} from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import {green500, grey100, blueGrey500} from 'material-ui/styles/colors';

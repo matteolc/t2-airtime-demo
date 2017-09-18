@@ -1,0 +1,127 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/src/gem/t2-airtime-demo/src/action/topup/Result.jsx';var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _adminOnRest = require('admin-on-rest');
+var _TextField = require('material-ui/TextField');var _TextField2 = _interopRequireDefault(_TextField);
+var _Card = require('material-ui/Card');
+var _LinearProgress = require('material-ui/LinearProgress');var _LinearProgress2 = _interopRequireDefault(_LinearProgress);
+var _Divider = require('material-ui/Divider');var _Divider2 = _interopRequireDefault(_Divider);
+var _Paper = require('material-ui/Paper');var _Paper2 = _interopRequireDefault(_Paper);
+var _RaisedButton = require('material-ui/RaisedButton');var _RaisedButton2 = _interopRequireDefault(_RaisedButton);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+const styles = {
+    text: {
+        marginLeft: 20 },
+
+    checkbox: {
+        marginBottom: 16,
+        maxWidth: 250 } };
+
+
+
+const Result = ({ record, nextStep }) => record ?
+_react2.default.createElement('span', { __source: { fileName: _jsxFileName, lineNumber: 21 }, __self: undefined },
+    _react2.default.createElement(_Paper2.default, { zDepth: 2, __source: { fileName: _jsxFileName, lineNumber: 22 }, __self: undefined },
+        _react2.default.createElement(_adminOnRest.ImageField, { record: record, source: 'operatorLogo', __source: { fileName: _jsxFileName, lineNumber: 23 }, __self: undefined }),
+        _react2.default.createElement(_TextField2.default, {
+            style: styles.text,
+            underlineShow: false,
+            defaultValue: record.balanceDisplay,
+            floatingLabelText: 'Balance', __source: { fileName: _jsxFileName, lineNumber: 24 }, __self: undefined }),
+        _react2.default.createElement(_TextField2.default, {
+            style: styles.text,
+            underlineShow: false,
+            defaultValue: parseFloat(record.productRetailPrice).toLocaleString(undefined, {
+                style: 'currency',
+                currency: record.currency }),
+
+            floatingLabelText: 'Retail Price', __source: { fileName: _jsxFileName, lineNumber: 29 }, __self: undefined }),
+        _react2.default.createElement(_TextField2.default, {
+            style: styles.text,
+            underlineShow: false,
+            defaultValue: parseFloat(record.productWholesalePrice).toLocaleString(undefined, {
+                style: 'currency',
+                currency: record.currency }),
+
+            floatingLabelText: 'Wholesale Price', __source: { fileName: _jsxFileName, lineNumber: 37 }, __self: undefined }),
+        _react2.default.createElement(_TextField2.default, {
+            style: styles.text,
+            underlineShow: false,
+            defaultValue: parseFloat(record.actualProductSent).toLocaleString(undefined, {
+                style: 'currency',
+                currency: record.localCurrency }),
+
+            floatingLabelText: 'Amount Sent', __source: { fileName: _jsxFileName, lineNumber: 45 }, __self: undefined }),
+        _react2.default.createElement(_Divider2.default, { __source: { fileName: _jsxFileName, lineNumber: 53 }, __self: undefined }),
+        _react2.default.createElement(_TextField2.default, {
+            style: styles.text,
+            underlineShow: false,
+            defaultValue: record.countryName,
+            floatingLabelText: 'Country', __source: { fileName: _jsxFileName, lineNumber: 54 }, __self: undefined }),
+        _react2.default.createElement(_TextField2.default, {
+            style: styles.text,
+            underlineShow: false,
+            defaultValue: record.operatorName,
+            floatingLabelText: 'Operator', __source: { fileName: _jsxFileName, lineNumber: 59 }, __self: undefined }),
+        _react2.default.createElement(_TextField2.default, {
+            style: styles.text,
+            underlineShow: false,
+            defaultValue: record.productName,
+            floatingLabelText: 'Product', __source: { fileName: _jsxFileName, lineNumber: 64 }, __self: undefined }),
+        _react2.default.createElement(_Divider2.default, { __source: { fileName: _jsxFileName, lineNumber: 69 }, __self: undefined }),
+        _react2.default.createElement(_TextField2.default, {
+            style: styles.text,
+            underlineShow: false,
+            defaultValue: record.destinationMsisdn,
+            floatingLabelText: 'Destination', __source: { fileName: _jsxFileName, lineNumber: 70 }, __self: undefined }),
+        _react2.default.createElement(_TextField2.default, {
+            style: styles.text,
+            underlineShow: false,
+            defaultValue: record.msisdn,
+            floatingLabelText: 'Sender', __source: { fileName: _jsxFileName, lineNumber: 75 }, __self: undefined }),
+        _react2.default.createElement(_Divider2.default, { __source: { fileName: _jsxFileName, lineNumber: 80 }, __self: undefined }),
+        _react2.default.createElement(_TextField2.default, {
+            style: styles.text,
+            underlineShow: false,
+            defaultValue: record.transactionId,
+            floatingLabelText: 'Transaction ID', __source: { fileName: _jsxFileName, lineNumber: 81 }, __self: undefined }),
+        _react2.default.createElement(_TextField2.default, {
+            style: styles.text,
+            underlineShow: false,
+            defaultValue: record.transactionAuthenticationKey,
+            floatingLabelText: 'Authorization Key', __source: { fileName: _jsxFileName, lineNumber: 86 }, __self: undefined }),
+        _react2.default.createElement(_TextField2.default, {
+            style: styles.text,
+            underlineShow: false,
+            defaultValue: record.transactionErrorTxt,
+            floatingLabelText: 'Response Status', __source: { fileName: _jsxFileName, lineNumber: 91 }, __self: undefined }),
+        _react2.default.createElement(_Divider2.default, { __source: { fileName: _jsxFileName, lineNumber: 96 }, __self: undefined }),
+        _react2.default.createElement(_TextField2.default, {
+            style: styles.text,
+            underlineShow: false,
+            defaultValue: record.smsSent,
+            floatingLabelText: 'SMS Sent', __source: { fileName: _jsxFileName, lineNumber: 97 }, __self: undefined }),
+        _react2.default.createElement('span', {
+                style: {
+                    display: record.smsSent === 'yes' ?
+                    'block' :
+                    'none' }, __source: { fileName: _jsxFileName, lineNumber: 102 }, __self: undefined },
+
+            _react2.default.createElement(_TextField2.default, {
+                style: styles.text,
+                underlineShow: false,
+                defaultValue: record.sms,
+                floatingLabelText: 'SMS', __source: { fileName: _jsxFileName, lineNumber: 108 }, __self: undefined })),
+
+        _react2.default.createElement(_Divider2.default, { __source: { fileName: _jsxFileName, lineNumber: 114 }, __self: undefined }),
+        _react2.default.createElement(_TextField2.default, {
+            style: styles.text,
+            underlineShow: false,
+            defaultValue: new Date(record.executedAt).toLocaleString(),
+            floatingLabelText: 'Executed At', __source: { fileName: _jsxFileName, lineNumber: 115 }, __self: undefined })),
+
+    _react2.default.createElement(_Card.CardText, { __source: { fileName: _jsxFileName, lineNumber: 121 }, __self: undefined },
+        _react2.default.createElement(_RaisedButton2.default, { label: 'New Topup', primary: true, onClick: nextStep, __source: { fileName: _jsxFileName, lineNumber: 122 }, __self: undefined }))) :
+
+
+_react2.default.createElement(_LinearProgress2.default, { mode: 'indeterminate', __source: { fileName: _jsxFileName, lineNumber: 125 }, __self: undefined });exports.default =
+
+Result;
