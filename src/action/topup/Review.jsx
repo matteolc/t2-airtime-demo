@@ -17,7 +17,7 @@ const styles = {
 
 const initialState = {
     callingCode: null,
-    optionalInfo: false
+    optionalInfo: false,
 }
 
 class Review extends Component {
@@ -42,20 +42,28 @@ class Review extends Component {
             prevStep
         } = this.props;
 
-        const topupMethods = [ < MenuItem key = {
+        
+
+        let avaiableTopupMethods = [< MenuItem key = {
                 1
-            }
-            value = {
-                "topup"
-            }
-            primaryText = "Topup" />, < MenuItem key = {
-                2
             }
             value = {
                 "simulation"
             }
             primaryText = "Simulation" />
         ];
+
+        if (process.env.REACT_APP_SIMULATION_ONLY==='no') {
+            avaiableTopupMethods.push(< MenuItem key = {
+                2
+            }
+            value = {
+                "topup"
+            }
+            primaryText = "Topup" />
+
+            )
+        }
 
         return (
             <span>
@@ -68,7 +76,7 @@ class Review extends Component {
                         floatingLabelText="Topup Method"
                         floatingLabelFixed={true}
                         hintText="Choose a Topup Method..">
-                        {topupMethods}
+                        {avaiableTopupMethods}
                     </SelectField>
                     <br/>
                     <AutoComplete

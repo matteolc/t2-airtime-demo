@@ -6,7 +6,7 @@ import LanguageIcon from 'material-ui/svg-icons/action/language';
 export {LanguageIcon as CountryIcon};
 
 export const CountryList = (props) => (
-    <List title="Countries" {...props}>
+    <List pagination={''} title="Countries" {...props}>
         <CountryGrid/>
     </List>
 );

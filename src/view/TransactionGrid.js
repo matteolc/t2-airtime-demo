@@ -12,10 +12,11 @@ const styles = {
     root: {
         display: 'flex',
         flexWrap: 'wrap',
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        padding: '0px 1em 1em',
     },
     card: {
-        margin: '0.5em'
+        margin: '0.5em',
     }
 };
 

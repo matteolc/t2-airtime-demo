@@ -6,7 +6,7 @@ const styles = {
     root: {
         display: 'flex',
         flexWrap: 'wrap',
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
     },
     card: {
         margin: '0.5em'

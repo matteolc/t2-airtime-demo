@@ -33,7 +33,7 @@ const TransactionFilters = (props) => (
 );
 
 export const TransactionList = (props) => (
-    <List title="Transactions" filters={< TransactionFilters />} {...props}>
+    <List pagination={''} title="Transactions" filters={< TransactionFilters />} {...props}>
         <TransactionGrid/>
     </List>
 );
