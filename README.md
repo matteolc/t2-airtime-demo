@@ -22,6 +22,7 @@ yarn install
 export REACT_APP_API_ADDRESS=<your_proxy_address>
 export REACT_APP_API_PORT=<your_proxy_port>
 export REACT_APP_API_PROTOCOL=<http or https>
+export REACT_APP_SIMULATION_ONLY=<yes or no>
 ```
 
 4. Build:
