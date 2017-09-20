@@ -2,9 +2,12 @@ import React, {Component} from 'react';
 import {Step, Stepper, StepLabel} from 'material-ui/Stepper';
 import {Card, CardText} from 'material-ui/Card';
 import {jsonApiHttpClient, queryParameters} from 'aor-jsonapi-client/build/fetch';
-import {baseApiUrl} from '../App';
 import {ViewTitle} from 'admin-on-rest/lib/mui';
-
+import {GET_LIST} from 'admin-on-rest/lib/rest/types';
+import {apiClient, baseApiUrl, tokenDigest} from '../App';
+import {userLogout as userLogoutAction} from 'admin-on-rest/lib/actions/authActions';
+import {connect} from 'react-redux';
+import compose from 'recompose/compose';
 import Destination from './topup/Destination'
 import Product from './topup/Product'
 import Review from './topup/Review'
@@ -18,7 +21,7 @@ const initialState = {
     stepTitles: [
         'Enter Destination', 'Choose Product', 'Review Options', 'Checkout'
     ],
-    loading: false,
+    loading: true,
     wizard: {
         availableCountries: [],
         msisdnInfo: {},
@@ -46,9 +49,32 @@ const styles = {
     }
 };
 
+const defaultParams = {
+    sort: {
+        field: 'id',
+        order: 'asc'
+    },
+    filter: {},
+    pagination: {
+        page: 1,
+        perPage: 1000
+    }
+}
+
 class Topup extends Component {
 
     state = initialState
+
+    componentWillMount() {
+        apiClient(GET_LIST, 'countries', defaultParams).then((response) => {
+            this.setState({loading: false})
+            this.saveValues({availableCountries: response.data})
+        }).catch((reason) => {
+            this
+                .props
+                .userLogout()
+        })
+    }
 
     getStepContent(stepIndex) {
         const {loading, result, wizard} = this.state;
@@ -103,7 +129,10 @@ class Topup extends Component {
             cid2: wizard.cid2,
             cid3: wizard.cid3
         };
-        jsonApiHttpClient(`${baseApiUrl}/topup?${queryParameters(params)}`, {method: 'POST'}).then((response) => {
+        let options = {}
+        options.method = 'POST'
+        options.headers = new Headers({ 'Authorization': `Token token=${tokenDigest()}` });         
+        jsonApiHttpClient(`${baseApiUrl}/topup?${queryParameters(params)}`, options).then((response) => {
             if (response.json.status === "ok") {
                 this.setState({result: response.json.data, loading: false})
                 this.handleNext()
@@ -157,4 +186,8 @@ class Topup extends Component {
 
 }
 
-export default Topup;
+const mapStateToProps = state => ({});
+
+const enhance = compose(connect(mapStateToProps, {userLogout: userLogoutAction}));
+
+export default enhance(Topup);

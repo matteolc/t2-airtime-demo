@@ -23,6 +23,8 @@ export REACT_APP_API_ADDRESS=<your_proxy_address>
 export REACT_APP_API_PORT=<your_proxy_port>
 export REACT_APP_API_PROTOCOL=<http or https>
 export REACT_APP_SIMULATION_ONLY=<yes or no>
+export REACT_APP_API_TOKEN=<t2_airtime_api_token>
+export REACT_APP_API_KEY=<t2_airtime_api_key>
 ```
 
 4. Build:

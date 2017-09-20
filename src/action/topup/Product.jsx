@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {GET_LIST} from 'admin-on-rest/lib/rest/types';
-import {apiClient, baseApiUrl} from '../../App';
+import {apiClient, baseApiUrl, tokenDigest} from '../../App';
 import LinearProgress from 'material-ui/LinearProgress';
 import {jsonApiHttpClient} from 'aor-jsonapi-client/build/fetch';
 import ProductGrid from '../../view/ProductGrid';
@@ -40,7 +40,9 @@ class Product extends Component {
 
     selectTopup = (product) => {
         this.setState({reservingId: true})
-        jsonApiHttpClient(`${baseApiUrl}/reserve_id`).then((response) => {
+        let options = {}
+        options.headers = new Headers({ 'Authorization': `Token token=${tokenDigest()}` });        
+        jsonApiHttpClient(`${baseApiUrl}/reserve_id`, options).then((response) => {
             if (response.json.status === "ok") {
                 this.setState({reservingId: false})
                 this
